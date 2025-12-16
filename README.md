@@ -1,432 +1,180 @@
-# Personalized Expense Analyzer Dashboard
+Fair. You’re right to be picky here — this is **public-facing**, and the previous one was **too plain / text-heavy**.
 
-A full-stack web application for tracking expenses, managing budgets, and generating spending reports. Built with **Spring Boot**, **React**, and **MySQL**.
+Below is a **visually cleaner, recruiter-friendly, one-page README** that:
 
----
+* Looks modern on GitHub
+* Is scannable in **30–40 seconds**
+* Still honest to your code
+* Uses spacing, icons, and emphasis (without being childish)
 
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation & Setup](#installation--setup)
-- [Database Schema](#database-schema)
-- [API Endpoints](#api-endpoints)
-- [Running the Application](#running-the-application)
-- [Testing with Postman](#testing-with-postman)
-- [Frontend Setup](#frontend-setup)
-- [Resume Highlights](#resume-highlights)
+👉 **Directly paste this into `README.md`**. No explanation, no commentary.
 
 ---
 
-## ✨ Features
+```md
+# 💰 ExpenseTracker (Backend)
 
-- ✅ **User Management** - Create and manage user accounts
-- ✅ **Transaction Tracking** - Record income and expenses with categories
-- ✅ **Budget Management** - Set and track monthly budgets
-- ✅ **Weekly/Monthly Reports** - Analyze spending patterns by category
-- ✅ **RESTful API** - Clean, scalable backend architecture
-- ✅ **Modular Design** - Separated transaction and reporting logic
-- ✅ **CORS Enabled** - Support for cross-origin requests
+A **Spring Boot backend application** for tracking expenses, managing budgets, and generating spending insights.  
+Built with **clean REST APIs**, **layered architecture**, and **MySQL persistence**.
+
+🔗 **Repository:** https://github.com/Sachinm31/ExpenseTracker
+
+---
+
+## 🚀 What this project does
+- Manage users and their financial data
+- Record income and expense transactions
+- Maintain monthly budgets
+- Generate weekly spending summaries by category
+- Expose clean, production-style REST APIs
 
 ---
 
 ## 🛠 Tech Stack
-
-### Backend
-- **Java 17** - Programming language
-- **Spring Boot 3.2.0** - Framework
-- **Spring Data JPA** - ORM for database operations
-- **MySQL 8.0** - Relational database
-- **Lombok** - Reduce boilerplate code
-- **Maven** - Dependency management
-
-### Frontend (Optional)
-- **React.js** - UI library
-- **Axios** - HTTP client
-- **Recharts** - Data visualization
-- **Tailwind CSS** - Styling
-
-### Tools
-- **IntelliJ IDEA** - IDE
-- **Postman** - API testing
-- **Git** - Version control
+**Backend**
+- Java 17  
+- Spring Boot 3.2  
+- Spring Data JPA (Hibernate)  
+- MySQL  
+- Lombok  
+- Maven  
 
 ---
 
-## 📁 Project Structure
+## 🏗 Architecture & Design
+- Layered architecture:  
+  **Controller → Service → Repository → Database**
+- DTO-based API contracts
+- Business logic isolated in service layer
+- Centralized exception handling using `@ControllerAdvice`
+- CORS enabled for frontend integration
 
-```
-expense-tracker/
-├── src/main/java/com/expense_tracker/
-│   ├── entity/                    # JPA entities
-│   │   ├── User.java
-│   │   ├── Transaction.java
-│   │   ├── TransactionType.java
-│   │   └── Budget.java
-│   ├── repository/                # Data access layer
-│   │   ├── UserRepository.java
-│   │   ├── TransactionRepository.java
-│   │   └── BudgetRepository.java
-│   ├── service/                   # Business logic
-│   │   ├── TransactionService.java
-│   │   ├── BudgetService.java
-│   │   └── ReportingService.java
-│   ├── controller/                # REST endpoints
-│   │   ├── UserController.java
-│   │   ├── TransactionController.java
-│   │   ├── BudgetController.java
-│   │   └── ReportingController.java
-│   ├── dto/                       # Data transfer objects
-│   │   ├── TransactionDto.java
-│   │   ├── BudgetDto.java
-│   │   ├── SpendingSummaryDto.java
-│   │   └── UserDto.java
-│   └── ExpenseTrackerApplication.java
-├── src/main/resources/
-│   └── application.properties      # Configuration
-├── pom.xml                         # Maven dependencies
-└── README.md
+---
+
+## 📡 API Overview
+
+### Users
 ```
 
+GET    /api/users
+POST   /api/users
+GET    /api/users/{id}
+DELETE /api/users/{id}
+
+```
+
+### Transactions
+```
+
+GET    /api/transactions
+POST   /api/transactions
+GET    /api/transactions/{id}
+DELETE /api/transactions/{id}
+
+```
+
+### Budgets
+```
+
+GET    /api/budgets
+POST   /api/budgets
+GET    /api/budgets/{id}
+DELETE /api/budgets/{id}
+
+```
+
+### Reports
+```
+
+GET /api/reports/weekly
+
+````
+
 ---
 
-## 📦 Prerequisites
-
-- **Java 17 or higher**
-- **Maven 3.8+**
-- **MySQL 8.0+**
-- **Git**
-- **Postman** (for API testing)
+## 🗄 Database Model (High-level)
+- **User** → one-to-many → **Transactions**
+- **User** → one-to-many → **Budgets**
+- **Transaction**: date, amount, category, type (INCOME / EXPENSE)
+- **Budget**: monthly budget per user
 
 ---
 
-## 🚀 Installation & Setup
+## ▶️ Run Locally
 
-### Step 1: Clone the Repository
+### Prerequisites
+- Java 17+
+- Maven
+- MySQL
 
+### Setup
 ```bash
-git clone https://github.com/yourusername/expense-tracker.git
-cd expense-tracker
-```
+git clone https://github.com/Sachinm31/ExpenseTracker.git
+cd ExpenseTracker
+````
 
-### Step 2: Create MySQL Database
-
-Open MySQL Command Line and run:
+Create database:
 
 ```sql
 CREATE DATABASE expense_db;
 ```
 
-### Step 3: Configure Application Properties
-
-Edit `src/main/resources/application.properties`:
-
-```properties
-server.port=8080
-
-spring.datasource.url=jdbc:mysql://localhost:3306/expense_db
-spring.datasource.username=root
-spring.datasource.password=your_mysql_password
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=false
-
-logging.level.com.expense_tracker=DEBUG
-```
-
-### Step 4: Build the Project
+Set DB password:
 
 ```bash
-mvn clean install
+DB_PASSWORD=your_mysql_password
 ```
 
-### Step 5: Run the Application
+Run application:
 
 ```bash
-mvn spring-boot:run
+mvn clean spring-boot:run
 ```
 
-Or run from IntelliJ:
-- Right-click `ExpenseTrackerApplication.java` → Run
+App runs on:
 
-The application will start on **http://localhost:8080**
-
----
-
-## 🗄️ Database Schema
-
-### Users Table
-```sql
-CREATE TABLE users (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  full_name VARCHAR(255),
-  active BOOLEAN DEFAULT TRUE
-);
 ```
-
-### Transactions Table
-```sql
-CREATE TABLE transactions (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  date DATE NOT NULL,
-  amount DOUBLE NOT NULL,
-  category VARCHAR(100),
-  description VARCHAR(255),
-  type VARCHAR(50) NOT NULL,
-  user_id BIGINT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-```
-
-### Budgets Table
-```sql
-CREATE TABLE budgets (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  month INT,
-  year INT,
-  amount DOUBLE,
-  user_id BIGINT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
+http://localhost:8080
 ```
 
 ---
 
-## 📡 API Endpoints
-
-### Users API
-```
-GET    /api/users              - Get all users
-POST   /api/users              - Create new user
-GET    /api/users/{id}         - Get user by ID
-DELETE /api/users/{id}         - Delete user
-```
-
-### Transactions API
-```
-GET    /api/transactions       - Get all transactions
-POST   /api/transactions       - Create new transaction
-GET    /api/transactions/{id}  - Get transaction by ID
-DELETE /api/transactions/{id}  - Delete transaction
-```
-
-### Budgets API
-```
-GET    /api/budgets            - Get all budgets
-POST   /api/budgets            - Create/Update budget
-GET    /api/budgets/{id}       - Get budget by ID
-DELETE /api/budgets/{id}       - Delete budget
-```
-
-### Reports API
-```
-GET    /api/reports/weekly     - Get weekly spending summary
-GET    /api/reports/monthly    - Get monthly spending summary
-```
-
----
-
-## 🧪 Testing with Postman
-
-### 1. Create a User
+## 🧪 Example API Call
 
 ```http
-POST http://localhost:8080/api/users
-Content-Type: application/json
-
-{
-  "email": "john@example.com",
-  "password": "password123",
-  "fullName": "John Doe",
-  "active": true
-}
-```
-
-### 2. Create a Transaction
-
-```http
-POST http://localhost:8080/api/transactions
+POST /api/transactions
 Content-Type: application/json
 
 {
   "date": "2025-12-16",
   "amount": 500,
   "category": "Food",
-  "description": "Lunch",
   "type": "EXPENSE",
-  "user": {
-    "id": 1
-  }
+  "user": { "id": 1 }
 }
-```
-
-### 3. Get Weekly Report
-
-```http
-GET http://localhost:8080/api/reports/weekly
-```
-
-**Response:**
-```json
-{
-  "totalExpense": 500.0,
-  "totalIncome": 0.0,
-  "categoryTotals": {
-    "Food": 500.0
-  }
-}
-```
-
-### 4. Create Budget
-
-```http
-POST http://localhost:8080/api/budgets
-Content-Type: application/json
-
-{
-  "month": 12,
-  "year": 2025,
-  "amount": 5000,
-  "user": {
-    "id": 1
-  }
-}
-```
-
----
-
-## 🎨 Frontend Setup (Optional)
-
-### Create React App
-
-```bash
-npx create-react-app expense-dashboard
-cd expense-dashboard
-npm install axios recharts
-```
-
-### Update `.env`
-```
-REACT_APP_API_BASE_URL=http://localhost:8080/api
-```
-
-### Example API Call
-
-```javascript
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL
-});
-
-// Get transactions
-api.get('/transactions').then(res => {
-  console.log(res.data);
-});
 ```
 
 ---
 
 ## 💼 Resume Highlights
 
-Add these bullet points to your resume:
-
-- **Personalized Expense Analyzer Dashboard** – Full-stack application built with Spring Boot, React, and MySQL
-- Implemented **RESTful APIs** for transaction management, budget tracking, and spending analysis
-- Designed **relational database schema** (User, Transaction, Budget) with proper foreign keys and indexes
-- Created **modular backend architecture** separating transaction and reporting logic for maintainability
-- Built **React dashboard** with Recharts for visualizing spending patterns (pie charts, bar charts, line graphs)
-- Implemented **weekly/monthly spending summaries** with category-wise breakdown and budget vs actual comparison
-
----
-
-## 🔄 Git Workflow
-
-### Initial Commit
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: Expense Tracker backend setup"
-git branch -M main
-git remote add origin https://github.com/yourusername/expense-tracker.git
-git push -u origin main
-```
-
-### Regular Commits
-
-```bash
-# Feature branch
-git checkout -b feature/add-jwt-auth
-git add .
-git commit -m "feat: Add JWT authentication"
-git push origin feature/add-jwt-auth
-
-# Create pull request on GitHub
-```
-
----
-
-## 🐛 Troubleshooting
-
-### Port 8080 already in use
-```bash
-# Find process using port 8080
-lsof -i :8080
-
-# Kill the process
-kill -9 <PID>
-```
-
-### MySQL connection refused
-- Ensure MySQL is running
-- Check credentials in `application.properties`
-- Verify database exists: `CREATE DATABASE expense_db;`
-
-### No tables in database
-- Set `spring.jpa.hibernate.ddl-auto=update` in properties
-- Restart the application to auto-create tables
-
----
-
-## 📚 Resources
-
-- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
-- [React Documentation](https://react.dev)
-- [MySQL Documentation](https://dev.mysql.com/doc/)
-- [Recharts Documentation](https://recharts.org/)
-
----
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+* Developed a **Spring Boot backend** for expense and budget management
+* Designed **RESTful APIs** with proper HTTP semantics
+* Implemented **weekly spending analytics** with category-wise aggregation
+* Applied **clean architecture principles** and centralized error handling
+* Integrated **MySQL persistence** using Spring Data JPA
 
 ---
 
 ## 👤 Author
 
-**Your Name** - Aspiring Full-Stack Java Developer
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+**Sachin**
+Backend / Java Developer
 
----
+* GitHub: [https://github.com/Sachinm31](https://github.com/Sachinm31)
+* LinkedIn: [https://www.linkedin.com/in/sachinm31/](https://www.linkedin.com/in/sachinm31/)
 
-## 🙏 Contributing
+  
 
-Contributions, issues, and feature requests are welcome!
+```
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-**Happy Coding! 🚀**
