@@ -1,0 +1,20 @@
+package com.expense_tracker.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "budgets")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+public class Budget {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Integer month;
+    private Integer year;
+    private Double amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+}
